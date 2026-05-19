@@ -459,13 +459,37 @@ async function loadRemoteAlbum() {
 
     // 如果 payload 包含 folders 配置，自动扫描文件夹
     if (payload && payload.folders) {
-      return scanFolders(payload);
+      const scannedData = await scanFolders(payload);
+      // 直接合并照片，不再经过 normalizeAlbumPayload
+      return mergeScannedPhotos(scannedData);
     }
 
     return payload;
   }
 
   return {};
+}
+
+/**
+ * 合并扫描得到的照片（跳过 normalizeAlbumPayload）
+ */
+function mergeScannedPhotos(scannedData) {
+  const configured = config.galleries || {};
+  const next = {};
+
+  galleryKeys.forEach((key) => {
+    const merged = [
+      ...collectPhotos(configured, key),
+      ...(scannedData.galleries[key] || [])
+    ];
+
+    next[key] = merged.length ? dedupePhotos(merged) : createFallbackPhotos(key);
+  });
+
+  return {
+    ...scannedData,
+    galleries: next
+  };
 }
 
 async function scanFolders(payload) {
