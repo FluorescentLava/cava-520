@@ -501,10 +501,17 @@ async function scanFolderImages(baseUrl, folderPath, maxCount, pattern, galleryK
   const images = [];
   const promises = [];
 
+  console.log(`🔍 扫描文件夹: ${folderPath}, baseUrl: ${baseUrl}`);
+
   // 生成可能的文件名并并行测试
   for (let i = 1; i <= maxCount; i++) {
     const filename = formatFilename(pattern, i);
     const url = `${baseUrl}/${folderPath}/${filename}`.replace(/\/+/g, "/");
+
+    // 只记录前几个文件的测试URL
+    if (i <= 3) {
+      console.log(`  测试[${i}]: ${url}`);
+    }
 
     promises.push(
       testImageExists(url).then(exists => {
@@ -513,6 +520,9 @@ async function scanFolderImages(baseUrl, folderPath, maxCount, pattern, galleryK
             src: url,
             alt: `${galleryKey} ${i}`
           });
+          if (images.length <= 3) {
+            console.log(`  ✅ 找到: ${url}`);
+          }
         }
       })
     );
