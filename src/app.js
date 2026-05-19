@@ -469,11 +469,17 @@ async function loadRemoteAlbum() {
 }
 
 async function scanFolders(payload) {
-  const baseUrl = payload.baseUrl || config.albumBaseUrl || "";
+  // 优先使用 _albumBaseUrl（normalizeAlbumPayload 设置的），其次是 baseUrl
+  const baseUrl = payload._albumBaseUrl || payload.baseUrl || config.albumBaseUrl || "";
   const folders = payload.folders || {};
   const galleries = {};
 
   console.log("📁 开始扫描文件夹...", folders);
+  console.log("🔗 Base URL:", baseUrl);
+
+  if (!baseUrl) {
+    console.error("❌ baseUrl 为空！请检查 album.json 中是否包含 baseUrl 字段");
+  }
 
   for (const [galleryKey, folderConfig] of Object.entries(folders)) {
     const folderPath = typeof folderConfig === "string" ? folderConfig : folderConfig.path || galleryKey;
