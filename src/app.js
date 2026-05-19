@@ -129,6 +129,14 @@ async function init() {
   applyDates();
   applyTarotResources();
   state.photos = mergePhotos(remoteAlbum);
+  
+  // Debug: 打印第一个图片的 URL
+  if (state.photos.couple && state.photos.couple.length > 0) {
+    console.log("🖼️ 第一张合照 URL:", state.photos.couple[0].src);
+    console.log(" URL 类型:", typeof state.photos.couple[0].src);
+    console.log(" 是否以 http 开头:", state.photos.couple[0].src.startsWith('http'));
+  }
+  
   renderHeart();
   updateMeter();
 }
