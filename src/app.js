@@ -478,7 +478,7 @@ async function scanFolders(payload) {
   for (const [galleryKey, folderConfig] of Object.entries(folders)) {
     const folderPath = typeof folderConfig === "string" ? folderConfig : folderConfig.path || galleryKey;
     const maxCount = typeof folderConfig === "object" ? (folderConfig.max || 100) : 100;
-    const namePattern = typeof folderConfig === "object" ? (folderConfig.pattern || "photo-{:02d}.jpg") : "photo-{:02d}.jpg";
+    const namePattern = typeof folderConfig === "object" ? (folderConfig.pattern || "photo-{02d}.jpg") : "photo-{02d}.jpg";
 
     galleries[galleryKey] = await scanFolderImages(baseUrl, folderPath, maxCount, namePattern, galleryKey);
     console.log(`✅ ${galleryKey}: 找到 ${galleries[galleryKey].length} 张图片`);
