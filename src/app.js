@@ -501,12 +501,26 @@ async function scanFolderImages(baseUrl, folderPath, maxCount, pattern, galleryK
   const images = [];
   const promises = [];
 
-  console.log(`🔍 扫描文件夹: ${folderPath}, baseUrl: ${baseUrl}`);
+  // 确保 baseUrl 是有效的绝对路径
+  if (!baseUrl || !baseUrl.startsWith('http')) {
+    console.error(`❌ baseUrl 无效: "${baseUrl}"`);
+    return [];
+  }
+
+  console.log(`🔍 扫描文件夹: ${folderPath}`);
+  console.log(`   Base URL: ${baseUrl}`);
 
   // 生成可能的文件名并并行测试
   for (let i = 1; i <= maxCount; i++) {
     const filename = formatFilename(pattern, i);
-    const url = `${baseUrl}/${folderPath}/${filename}`.replace(/\/+/g, "/");
+    // 使用 URL 构造函数确保正确的 URL 拼接
+    let url;
+    try {
+      url = new URL(`${folderPath}/${filename}`, baseUrl).toString();
+    } catch (e) {
+      // 如果 URL 构造失败，手动拼接
+      url = `${baseUrl.replace(/\/+$/, '')}/${folderPath.replace(/^\/+/, '')}/${filename}`;
+    }
 
     // 只记录前几个文件的测试URL
     if (i <= 3) {
@@ -529,6 +543,8 @@ async function scanFolderImages(baseUrl, folderPath, maxCount, pattern, galleryK
   }
 
   await Promise.all(promises);
+
+  console.log(`  📊 共找到 ${images.length} 张图片`);
 
   // 按序号排序
   return images.sort((a, b) => {
