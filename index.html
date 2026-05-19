@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fffaf7" />
+    <meta name="description" content="Cava520相册" />
+    <title>FluorescentLava x Caleb 的情侣空间</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff8fa8' d='M32 56S8 42 8 24c0-8 6-14 14-14 5 0 8 2 10 6 2-4 5-6 10-6 8 0 14 6 14 14 0 18-24 32-24 32Z'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./src/styles.css?v=20260519-layered-album" />
+  </head>
+  <body>
+    <svg class="shape-defs" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id="cavaHeartClip" clipPathUnits="objectBoundingBox">
+          <path d="M .5 .94 C .24 .76, .07 .58, .08 .36 C .09 .16, .29 .08, .5 .28 C .71 .08, .91 .16, .92 .36 C .93 .58, .76 .76, .5 .94 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+
+    <div class="ambient-field" aria-hidden="true">
+      <span class="ambient-chromosome ambient-chromosome-one"></span>
+      <span class="ambient-chromosome ambient-chromosome-two"></span>
+      <span class="ambient-chromosome ambient-chromosome-three"></span>
+      <span class="ambient-chromosome ambient-chromosome-four"></span>
+    </div>
+
+    <section class="intro-screen" id="introScreen" aria-label="主页">
+      <div class="intro-copy">
+        <p class="intro-hi">Hi，老公。</p>
+        <p class="intro-520" id="intro520" hidden></p>
+        <p class="intro-question">在岁月这本不会结束的书里，我们会发生多少的故事呢？</p>
+      </div>
+      <button class="intro-hint" type="button" id="enterButton" aria-label="滑动进入内容页">
+        <span>滑动进入内容页</span>
+      </button>
+    </section>
+
+    <div class="page-shell" id="contentPage" aria-label="相册内容页">
+      <header class="topbar reveal-item">
+        <div class="brand-mark" aria-label="cava">
+          <span class="brand-dot"></span>
+          <span id="brandName">FluorescentLava x Caleb 的情侣空间</span>
+        </div>
+        <div class="topbar-right">
+          <div class="photo-meter" id="photoMeter" aria-live="polite">正在装入回忆</div>
+          <button class="theme-toggle" type="button" id="themeButton" aria-label="切换到夜晚">
+            <svg class="theme-icon" id="themeIcon" viewBox="0 0 24 24" aria-hidden="true"></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="stage">
+        <aside class="tarot-side tarot-side-left reveal-item" aria-label="FluorescentLava 专属卡片">
+          <button class="tarot-card" type="button" data-gallery="lava">
+            <span class="tarot-line tarot-line-top"></span>
+            <span class="tarot-roman">I</span>
+            <span class="tarot-glyph" id="lavaCardGlyph">THE FLAME</span>
+            <span class="tarot-title" id="lavaCardTitle">FluorescentLava</span>
+            <span class="tarot-subtitle">Cava Oracle</span>
+            <span class="tarot-line tarot-line-bottom"></span>
+          </button>
+        </aside>
+
+        <section class="heart-scene reveal-item" aria-label="情侣照片爱心拼图">
+          <div class="heart-board">
+            <div class="heart-grid" id="heartGrid"></div>
+          </div>
+
+          <div class="scene-copy">
+            <h1 id="sceneTitle">没说完的喜欢，会汇聚成一颗充满回忆的心。</h1>
+            <p class="scene-kicker" id="sceneKicker">我们已经相处了 <strong>1</strong> 天</p>
+          </div>
+        </section>
+
+        <aside class="tarot-side tarot-side-right reveal-item" aria-label="Caleb 专属卡片">
+          <button class="tarot-card" type="button" data-gallery="caleb">
+            <span class="tarot-line tarot-line-top"></span>
+            <span class="tarot-roman">II</span>
+            <span class="tarot-glyph" id="calebCardGlyph">THE COMPASS</span>
+            <span class="tarot-title" id="calebCardTitle">Caleb</span>
+            <span class="tarot-subtitle">Cava Oracle</span>
+            <span class="tarot-line tarot-line-bottom"></span>
+          </button>
+        </aside>
+      </main>
+
+      <div class="action-dock reveal-item" aria-label="页面操作">
+        <button class="dock-button" type="button" id="shuffleButton">重新裁一版</button>
+        <button class="dock-button dock-button-ghost" type="button" id="downloadButton">下载拼图</button>
+      </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" hidden>
+      <div class="lightbox-backdrop" data-close-lightbox></div>
+      <section class="lightbox-panel" role="dialog" aria-modal="true" aria-label="照片预览">
+        <button class="lightbox-close" type="button" aria-label="关闭预览" data-close-lightbox>×</button>
+        <button class="lightbox-nav lightbox-prev" type="button" aria-label="上一张">‹</button>
+        <figure class="lightbox-figure">
+          <img id="lightboxImage" alt="" />
+          <figcaption>
+            <span id="lightboxTitle">cava</span>
+            <span id="lightboxIndex">1 / 1</span>
+          </figcaption>
+        </figure>
+        <button class="lightbox-nav lightbox-next" type="button" aria-label="下一张">›</button>
+      </section>
+    </div>
+
+    <div class="album-viewer" id="albumViewer" hidden>
+      <div class="album-backdrop" data-close-album></div>
+      <section class="album-panel" role="dialog" aria-modal="true" aria-label="个人相册">
+        <figure class="album-card-stage" id="albumCardStage">
+          <img class="album-card-image" id="albumCardImage" alt="" />
+        </figure>
+        <section class="album-gallery" aria-live="polite">
+          <header class="album-gallery-header">
+            <p class="album-gallery-kicker" id="albumGalleryKicker">Cava Oracle</p>
+            <h2 id="albumGalleryTitle">cava</h2>
+          </header>
+          <div class="album-gallery-grid" id="albumGalleryGrid"></div>
+        </section>
+      </section>
+      <p class="album-return-hint">点击空白处返回</p>
+    </div>
+
+    <script src="./src/config.js?v=20260519-layered-album"></script>
+    <script src="./src/app.js?v=20260519-layered-album"></script>
+  </body>
+</html>

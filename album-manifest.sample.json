@@ -1,0 +1,23 @@
+{
+  "baseUrl": "https://img.example.com/cava-520/",
+
+  // 使用 folders 自动扫描（推荐）
+  // 前端会自动探测每个文件夹中的图片文件
+  "folders": {
+    "couple": {
+      "path": "couple",
+      "max": 100,
+      "pattern": "photo-{02d}.jpg"
+    },
+    "lava": {
+      "path": "lava",
+      "max": 50,
+      "pattern": "photo-{02d}.jpg"
+    },
+    "caleb": {
+      "path": "caleb",
+      "max": 50,
+      "pattern": "photo-{02d}.jpg"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "baseUrl": "https://cava-520-1434414188.cos.ap-nanjing.myqcloud.com",
+  "folders": {
+    "couple": {
+      "path": "couple",
+      "max": 100,
+      "pattern": "photo-{02d}.jpg"
+    },
+    "lava": {
+      "path": "lava",
+      "max": 50,
+      "pattern": "photo-{02d}.jpg"
+    },
+    "caleb": {
+      "path": "caleb",
+      "max": 50,
+      "pattern": "photo-{02d}.jpg"
+    }
+  }
+}
